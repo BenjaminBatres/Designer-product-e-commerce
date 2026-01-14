@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 export default function CartItem({ product }) {
     const dispatch = useDispatch()
   return (
-    <div className="flex mt-8" key={product.id}>
+    <div className="flex mt-8">
       <div className="flex gap-4 flex-1/2">
         <figure className="p-1.5 w-30 h-33 bg-gray-100 rounded-sm">
           <Image

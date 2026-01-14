@@ -67,7 +67,7 @@ export default function page() {
           )}
 
           {cartAmount.map((product) => (
-            <CartItem product={product}/>
+            <CartItem product={product} key={product.id}/>
           ))}
           {cartAmount.length > 0 && (
             <div className="bg-gray-100 mt-8 float-right w-full md:w-[45%] mb-6 p-3 rounded-sm space-y-4">
