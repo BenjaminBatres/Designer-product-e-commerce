@@ -11,6 +11,7 @@ import Navbar from "@/app/components/Navbar";
 import SkeletonBox from "@/app/components/SkeletonBox";
 import SkeletonThumbnails from "@/app/components/SkeletonThumbnails";
 import Skeleton from "react-loading-skeleton";
+import Spinner from "@/app/components/ui/Spinner";
 // Icons
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
@@ -23,6 +24,7 @@ export default function page() {
   const [product, setProduct] = useState(null);
   const [active, setActive] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [salePrice, setSalePrice] = useState([]);
   const [listPrice, setListPrice] = useState([]);
   const [productColor, setProductColor] = useState(null);
@@ -70,7 +72,8 @@ export default function page() {
       setIsLoading(false);
     }
     fetchProduct();
-  }, [id]);
+    setLoading(true);
+  }, [active, id]);
 
   useEffect(() => {
     if (product?.colors?.length && productColor === null) {
@@ -80,8 +83,8 @@ export default function page() {
 
   const handleColorPicker = (color) => {
     setProductColor(color);
-    setIsColorSelected(true);
     setProductColors(imagesByColor[color][0]);
+    setIsColorSelected(true);
   };
   return (
     <>
@@ -98,7 +101,8 @@ export default function page() {
               </>
             ) : (
               <>
-                <figure className="w-full h-130 bg-gray-100 rounded-sm">
+                <figure className="w-full h-130 bg-gray-100 rounded-sm relative">
+                  {loading && <Spinner />}
                   <Image
                     width={500}
                     height={500}
@@ -108,7 +112,8 @@ export default function page() {
                         : product?.images[active].image_url
                     }
                     alt=""
-                    loading="lazy"
+                    onLoad={() => setLoading(false)}
+                    loading="eager"
                     className="w-full h-full object-contain"
                     sizes="(max-width: 768px) 100vw, 300px"
                   />
