@@ -6,27 +6,32 @@ import {
   removeFromCart,
 } from "@/app/redux/counterSlice";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 export default function CartItem({ product }) {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <div className="flex mt-8">
       <div className="flex gap-4 flex-1/2">
         <figure className="p-1.5 w-30 h-33 bg-gray-100 rounded-sm">
-          <Image
-            src={product.image}
-            width={500}
-            height={500}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <Link href={`/product/${product.id}`}>
+            <Image
+              src={product.image}
+              width={500}
+              height={500}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </Link>
         </figure>
 
-        <div className="space-y-1">
-          <div className="font-semibold">{product.name}</div>
-          <div className="font-semibold capitalize">{product.color}</div>
-          <div className="md:hidden">${product.price * product.quantity}</div>
-        </div>
+        <ul className="space-y-1">
+          <li className="font-semibold">
+            <Link href={`/product/${product.id}`}>{product.name}</Link>
+          </li>
+          <li className="font-semibold capitalize">{product.color}</li>
+          <li className="md:hidden">${product.price * product.quantity}</li>
+        </ul>
       </div>
       <div className="md:flex-1/2">
         <div className="flex flex-col-reverse md:flex-row items-end md:items-center gap-9 md:gap-6">
