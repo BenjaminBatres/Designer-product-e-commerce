@@ -90,7 +90,7 @@ export default function page() {
     <>
       <Navbar />
       <div className="max-w-360 mx-auto w-full">
-        <div className="flex flex-col md:flex-row mt-8 px-5 sm:px-12 2xl:px-0">
+        <div className="flex flex-col md:flex-row my-8 px-5 sm:px-12 2xl:px-0">
           <div className="w-full md:w-[40%]">
             {isLoading ? (
               <>

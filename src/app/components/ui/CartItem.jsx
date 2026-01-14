@@ -13,7 +13,7 @@ export default function CartItem({ product }) {
   return (
     <div className="flex mt-8">
       <div className="flex gap-4 flex-1/2">
-        <figure className="p-1.5 w-30 h-33 bg-gray-100 rounded-sm">
+        <figure className="p-1.5 w-25 h-25 sm:w-30 sm:h-33 bg-gray-100 rounded-sm">
           <Link href={`/product/${product.id}`}>
             <Image
               src={product.image}
