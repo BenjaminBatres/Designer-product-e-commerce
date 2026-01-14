@@ -15,7 +15,7 @@ export default function ImageThumbnails({
   return (
     <div className="flex mt-4">
       <Swiper
-        slidesPerView={Math.min(imagesLength, 5)}
+        slidesPerView={Math.min(imagesLength, 4)}
         spaceBetween={10}
         navigation
         modules={[Navigation]}

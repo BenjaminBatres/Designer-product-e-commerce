@@ -23,7 +23,7 @@ export default function ProductCard({ item }) {
   };
 
   return (
-    <div className="w-full sm:w-[48%] md:w-[32%] lg:w-[23%] ">
+    <div className="w-full sm:w-[48%] md:w-[32%] lg:w-[23%]">
       <Link href={`/product/${item.product_id}`} className="w-full h-87 block">
         <Image
           width={500}
