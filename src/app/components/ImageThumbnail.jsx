@@ -9,7 +9,6 @@ export default function ImageThumbnails({
   setActive,
   images,
   active,
-  setIsColorSelected,
 }) {
   const imagesLength = images?.length;
   return (
@@ -23,10 +22,7 @@ export default function ImageThumbnails({
         {images?.map((img, index) => (
           <SwiperSlide key={index} className="!w-20 !h-20">
             <button
-              onClick={() => {
-                setActive(index);
-                setIsColorSelected(false);
-              }}
+              onClick={() => setActive(index)}
               className={`w-20 h-20 border rounded-md p-1 transition ${
                 active === index
                   ? "border-black ring-2 ring-black/30"
