@@ -13,7 +13,6 @@ import { PiGreaterThanLight } from "react-icons/pi";
 // Redux
 import { useSelector } from "react-redux";
 
-
 export default function page() {
   const cartAmount = useSelector((state) => state.counter.items);
   const [loading, setLoading] = useState(false);
@@ -67,7 +66,7 @@ export default function page() {
           )}
 
           {cartAmount.map((product) => (
-            <CartItem product={product} key={product.id}/>
+            <CartItem product={product} key={product.id} />
           ))}
           {cartAmount.length > 0 && (
             <div className="bg-gray-100 mt-8 float-right w-full md:w-[45%] mb-6 p-3 rounded-sm space-y-4">

@@ -38,7 +38,12 @@ export default function ProductCard({ item }) {
         <div className="text-sm capitalize text-gray-500">
           {item.colors[colorPicker]}
         </div>
-        <div className="font-semibold text-lg">{item.name}</div>
+        <Link
+          href={`/product/${item.product_id}`}
+          className="font-semibold text-lg"
+        >
+          {item.name}
+        </Link>
         <div className="flex mt-2 gap-2 items-center">
           {salePrice.join("") === listPrice.join("") ? (
             <div className="text-gray-500">

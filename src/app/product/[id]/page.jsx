@@ -40,7 +40,6 @@ export default function page() {
     return acc;
   }, {});
 
-  const notify = () => toast("Your cart has been updated")
 
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
@@ -59,15 +58,9 @@ export default function page() {
         })
       );
     }
-    // notify()
-
-    // Change to add a sidebar notify
     
   };
-  const cartAmount = useSelector((state) => state.counter.items);
-  function productExistsOnCart() {
-    return cartAmount.find((item) => item.id === id);
-  }
+
   useEffect(() => {
     async function fetchProduct() {
       const res = await fetch(
