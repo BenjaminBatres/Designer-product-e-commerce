@@ -11,10 +11,10 @@ export default function SidebarCartItems({ product, setIsOpen }) {
   const dispatch = useDispatch();
   const cartAmount = useSelector((state) => state.counter.items);
   const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(product.id));
     if (cartAmount.length === 1) {
       setIsOpen(false);
     }
-    dispatch(removeFromCart(product.id));
   };
 
   return (
@@ -40,7 +40,6 @@ export default function SidebarCartItems({ product, setIsOpen }) {
           </li>
           <li className="flex gap-3 my-2">
             <button
-              disabled={cartAmount.length === product.quantity}
               onClick={() => dispatch(decreaseQuantity(product.id))}
               className="border border-gray-300 h-6 w-6 md:h-7 md:w-7 flex items-center justify-center cursor-pointer"
             >

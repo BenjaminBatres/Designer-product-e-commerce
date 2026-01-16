@@ -18,6 +18,7 @@ export default function ImageThumbnails({
         spaceBetween={10}
         navigation
         modules={[Navigation]}
+        className="select-none"
       >
         {images?.map((img, index) => (
           <SwiperSlide key={index} className="!w-20 !h-20">

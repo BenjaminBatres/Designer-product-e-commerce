@@ -12,14 +12,13 @@ import SkeletonBox from "@/app/components/SkeletonBox";
 import SkeletonThumbnails from "@/app/components/SkeletonThumbnails";
 import Skeleton from "react-loading-skeleton";
 import Spinner from "@/app/components/ui/Spinner";
+import Sidebar from "@/app/components/Sidebar";
 // Icons
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/redux/counterSlice";
-import { toast, ToastContainer } from "react-toastify";
-import Sidebar from "@/app/components/Sidebar";
 
 export default function page() {
   const { id } = useParams();
@@ -29,7 +28,7 @@ export default function page() {
   const [loading, setLoading] = useState(false);
   const [salePrice, setSalePrice] = useState([]);
   const [listPrice, setListPrice] = useState([]);
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [productColor, setProductColor] = useState(null);
   const [productColors, setProductColors] = useState(
     product?.images[active].image_url
@@ -40,25 +39,21 @@ export default function page() {
     return acc;
   }, {});
 
-
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    setIsOpen(true)
-    if (count > 0) {
-      dispatch(
-        addToCart({
-          id: product.product_id,
-          name: product.name,
-          quantity: count,
-          price: parseInt(salePrice.join("")),
-          image: productColors || product?.images[0].image_url,
-          color: productColor,
-        })
-      );
-    }
-    
+    setIsOpen(true);
+    dispatch(
+      addToCart({
+        id: product.product_id,
+        name: product.name,
+        quantity: count,
+        price: parseInt(salePrice.join("")),
+        image: productColors || product?.images[0].image_url,
+        color: productColor,
+      })
+    );
   };
 
   useEffect(() => {
@@ -88,11 +83,8 @@ export default function page() {
   };
   return (
     <>
-    <ToastContainer position="top-center" theme="dark"/>
       <Navbar />
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}/>
-
-      
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="max-w-360 mx-auto w-full">
         <div className="flex flex-col md:flex-row my-8 px-5 sm:px-12 2xl:px-0">
           <div className="w-full md:w-[40%]">
@@ -110,9 +102,7 @@ export default function page() {
                   <Image
                     width={500}
                     height={500}
-                    src={
-                       product?.images[active].image_url
-                    }
+                    src={product?.images[active].image_url}
                     alt=""
                     onLoad={() => setLoading(false)}
                     loading="eager"
@@ -181,39 +171,27 @@ export default function page() {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-4">
-                    {/* <Link
-                      href={"/cart"}
-                      className="flex gap-4 justify-center items-center border-3 py-5 lg:px-10 xl:px-23 rounded-[10px] cursor-pointer active:translate-y-px"
+                  <div className="flex w-full lg:w-[150px] items-center justify-between  border border-gray-700 py-5 px-3 select-none">
+                    <button
+                      onClick={() => setCount(count - 1)}
+                      disabled={count <= 1}
+                      className="cursor-pointer"
                     >
-                      <IoCartOutline className="text-xl" />
-                      <div>Go to cart</div>
-                    </Link> */}
-
-                    <>
-                      <div className="flex w-full lg:w-[150px] items-center justify-between  border border-gray-700 py-5 px-3 ">
-                        <button
-                          onClick={() => setCount(count - 1)}
-                          disabled={count <= 1}
-                          className="cursor-pointer"
-                        >
-                          <FaMinus />
-                        </button>
-                        <span className="font-semibold">{count}</span>
-                        <FaPlus
-                          onClick={() => setCount(count + 1)}
-                          className="text-sm cursor-pointer"
-                        />
-                      </div>
-                      <button
-                        onClick={handleAddToCart}
-                        className="flex gap-4 justify-center items-center border-3 py-5 lg:px-10 xl:px-23 rounded-[10px] cursor-pointer translate-y-px"
-                      >
-                        <IoCartOutline className="text-xl" />
-                        <div>Add to cart</div>
-                      </button>
-
-                    </>
-                  
+                      <FaMinus />
+                    </button>
+                    <span className="font-semibold">{count}</span>
+                    <FaPlus
+                      onClick={() => setCount(count + 1)}
+                      className="text-sm cursor-pointer"
+                    />
+                  </div>
+                  <button
+                    onClick={handleAddToCart}
+                    className="flex gap-4 justify-center items-center border-3 py-5 lg:px-10 xl:px-23 rounded-[10px] cursor-pointer active:translate-y-px"
+                  >
+                    <IoCartOutline className="text-xl" />
+                    <div>Add to cart</div>
+                  </button>
                 </div>
               </>
             )}
