@@ -1,37 +1,52 @@
 "use client";
-// Links
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
-import "react-loading-skeleton/dist/skeleton.css";
+import Image from "next/image";
 // Components
 import ImageThumbnails from "@/app/components/ImageThumbnail";
-import Navbar from "@/app/components/Navbar";
+import NavbarSecondary from "@/app/components/NavbarSecondary";
+import Spinner from "@/app/components/ui/Spinner";
+import Features from "@/app/components/ui/Features";
+import ProductDescription from "@/app/components/ui/ProductDescription";
+import ProductSizes from "@/app/components/ui/ProductSizes";
+import ProductColors from "@/app/components/ui/ProductColors";
+import SectionInfo from "@/app/components/SectionInfo";
+import CollectionSection from "@/app/components/CollectionSection";
+import Footer from "@/app/components/Footer";
+import EcoFriendlySection from "@/app/components/EcoFriendlySection";
 import SkeletonBox from "@/app/components/SkeletonBox";
 import SkeletonThumbnails from "@/app/components/SkeletonThumbnails";
-import Skeleton from "react-loading-skeleton";
-import Spinner from "@/app/components/ui/Spinner";
 import Sidebar from "@/app/components/Sidebar";
-// Icons
+import SidebarSecondary from "@/app/components/SidebarSecondary";
+//Icons
 import { FaMinus, FaPlus } from "react-icons/fa";
-import { IoCartOutline } from "react-icons/io5";
+// Swiper
+import "swiper/css";
+import "swiper/css/navigation";
+// Data
+import ProductInfo from "../../data/product-info.json";
 // Redux
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/redux/counterSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 export default function page() {
   const { id } = useParams();
+  const [count, setCount] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [product, setProduct] = useState(null);
-  const [active, setActive] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [active, setActive] = useState(0);
   const [salePrice, setSalePrice] = useState([]);
   const [listPrice, setListPrice] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [activeSize, setActiveSize] = useState(0);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [discountPercentage, setDiscountPercentage] = useState([]);
   const [productColor, setProductColor] = useState(null);
   const [productColors, setProductColors] = useState(
-    product?.images[active].image_url
+    product?.images[active].image_url,
   );
   const imagesByColor = product?.images.reduce((acc, img) => {
     if (!acc[img.color]) acc[img.color] = [];
@@ -39,33 +54,49 @@ export default function page() {
     return acc;
   }, {});
 
-  const [count, setCount] = useState(1);
+  const uniqueImages = product?.images.filter(
+    (img, index, self) =>
+      index === self.findIndex((i) => i.image_url === img.image_url),
+  );
+
   const dispatch = useDispatch();
+
+  const handleSize = (size, id) => {
+    setSelectedSize(size)
+    setActiveSize(id)
+  }
 
   const handleAddToCart = () => {
     setIsOpen(true);
     dispatch(
       addToCart({
-        id: product.product_id,
+        id: nanoid(),
+        productId: product.product_id,
         name: product.name,
         quantity: count,
         price: parseInt(salePrice.join("")),
         image: productColors || product?.images[0].image_url,
         color: productColor,
-      })
+        size: selectedSize, 
+        description: product.description
+      }),
     );
   };
 
   useEffect(() => {
     async function fetchProduct() {
       const res = await fetch(
-        `https://www.greatfrontend.com/api/projects/challenges/e-commerce/products/${id}`
+        `https://www.greatfrontend.com/api/projects/challenges/e-commerce/products/${id}`,
       );
       const data = await res.json();
       setProduct(data);
       setSalePrice(data.inventory.slice(0, 1).map((pri) => pri.sale_price));
       setListPrice(data.inventory.slice(0, 1).map((pri) => pri.list_price));
+      setDiscountPercentage(
+        data.inventory.map((discount) => discount.discount_percentage),
+      );
       setIsLoading(false);
+      setSelectedSize(data?.sizes[0])
     }
     fetchProduct();
     setLoading(true);
@@ -82,122 +113,107 @@ export default function page() {
     setProductColors(imagesByColor[color][0]);
   };
   return (
-    <>
-      <Navbar />
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="max-w-360 mx-auto w-full">
-        <div className="flex flex-col md:flex-row my-8 px-5 sm:px-12 2xl:px-0">
-          <div className="w-full md:w-[40%]">
-            {isLoading ? (
-              <>
-                <SkeletonBox width={"100%"} height={500} />
-                <div className="flex gap-2 mt-5">
-                  <SkeletonThumbnails thumbnails={5} />
-                </div>
-              </>
-            ) : (
-              <>
-                <figure className="w-full h-130 bg-gray-100 rounded-sm relative">
-                  {loading && <Spinner />}
-                  <Image
-                    width={500}
-                    height={500}
-                    src={product?.images[active].image_url}
-                    alt=""
-                    onLoad={() => setLoading(false)}
-                    loading="eager"
-                    className="w-full h-full object-contain"
-                    sizes="(max-width: 768px) 100vw, 300px"
+    <div className="bg-[#f3f5f7] min-h-screen p-3">
+      <NavbarSecondary setIsSidebarOpen={setIsSidebarOpen}/>
+      <SidebarSecondary isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>
+      <Sidebar setIsOpen={setIsOpen} isOpen={isOpen}/>
+      <div className="min-h-screen bg-white rounded-lg shadow-2xl/20 sm:shadow-2xl/40">
+        <div className="px-4 py-15 lg:p-15 xl:p-25">
+          <div className="flex flex-col lg:flex-row mb-30 gap-8">
+            <div className="lg:w-[50%] xl:w-[40%] lg:min-h-130">
+              {isLoading ? (
+                <>
+                  <SkeletonBox width={"100%"} height={800} borderRadius={8} />
+                  <div className="flex gap-2 mt-5">
+                    <SkeletonThumbnails thumbnails={3} />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <figure className="w-full relative">
+                    {loading && <Spinner />}
+                    <Image
+                      width={500}
+                      height={500}
+                      src={uniqueImages[active].image_url}
+                      alt=""
+                      onLoad={() => setLoading(false)}
+                      loading="eager"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </figure>
+                  <ImageThumbnails
+                    images={uniqueImages}
+                    setActive={setActive}
+                    active={active}
                   />
-                </figure>
-
-                <ImageThumbnails
-                  active={active}
-                  setActive={setActive}
-                  images={product?.images}
+                </>
+              )}
+            </div>
+            <div className="lg:w-[50%] lg:pl-8">
+              <ProductDescription
+                isLoading={isLoading}
+                product={product}
+                salePrice={salePrice}
+                listPrice={listPrice}
+                discountPercentage={discountPercentage}
+              />
+              <ProductColors
+                isLoading={isLoading}
+                product={product}
+                handleColorPicker={handleColorPicker}
+                productColor={productColor}
+              />
+              {product?.sizes.length > 0 && (
+                <ProductSizes
+                  isLoading={isLoading}
+                  product={product}
+                  activeSize={activeSize}
+                  handleSize={handleSize}
                 />
-              </>
-            )}
-          </div>
-
-          <div className="w-full md:w-[50%] md:pl-10 lg:pl-24 py-14">
-            <div className="text-2xl sm:text-4xl font-semibold">
-              {product?.name || <Skeleton />}
-            </div>
-            <div className="sm:text-lg text-gray-400 mt-8">
-              {product?.description || <Skeleton count={4} />}
-            </div>
-            {isLoading ? (
-              <>
-                <SkeletonBox width={"20%"} height={"1.3rem"} marginTop={15} />
-                <div className="text-gray-500 uppercase my-3">Color</div>
-                <div className="flex gap-2">
-                  <Skeleton borderRadius={20} width={18} height={18} />
-                  <Skeleton borderRadius={20} width={18} height={18} />
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex mt-5 gap-2 items-center">
-                  {salePrice.join("") === listPrice.join("") ? (
-                    <div className="text-gray-500 text-lg">${salePrice}</div>
-                  ) : (
-                    <>
-                      <div className="text-gray-500">${salePrice}</div>
-                      <div className="text-gray-500 text-xs line-through">
-                        ${listPrice}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div className="text-gray-500 uppercase my-3">Color</div>
-                <div className="flex gap-2 mb-8">
-                  {product?.colors.map((color) => (
-                    <div
-                      key={color}
-                      className={`${
-                        productColor === color ? "border-2 border-gray-600" : ""
-                      } rounded-full h-6 w-6 flex items-center justify-center`}
-                    >
-                      <button
-                        onClick={() => handleColorPicker(color)}
-                        className={`h-4 w-4 rounded-full cursor-pointer ${
-                          color === "white" ? "border-gray-500 border" : ""
-                        }`}
-                        style={{ backgroundColor: color }}
-                      ></button>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col lg:flex-row gap-4">
-                  <div className="flex w-full lg:w-[150px] items-center justify-between  border border-gray-700 py-5 px-3 select-none">
+              )}
+              <div className="text-gray-500 mb-4">Quantity</div>
+              {isLoading ? (
+                <>
+                  <div className="skeleton-box w-full lg:w-[150px] h-10 mb-8"></div>
+                  <SkeletonBox height={60} marginBottom={40} />
+                </>
+              ) : (
+                <>
+                  <div className="flex w-full lg:w-[150px] items-center justify-between rounded-sm bg-gray-50 border border-gray-200 py-2 px-3 select-none mb-8">
                     <button
                       onClick={() => setCount(count - 1)}
                       disabled={count <= 1}
-                      className="cursor-pointer"
+                      className="cursor-pointer text-black/70"
                     >
                       <FaMinus />
                     </button>
                     <span className="font-semibold">{count}</span>
                     <FaPlus
                       onClick={() => setCount(count + 1)}
-                      className="text-sm cursor-pointer"
+                      className="text-sm cursor-pointer text-black/70"
                     />
                   </div>
                   <button
                     onClick={handleAddToCart}
-                    className="flex gap-4 justify-center items-center border-3 py-5 lg:px-10 xl:px-23 rounded-[10px] cursor-pointer active:translate-y-px"
+                    className="flex justify-center py-5 lg:px-10 xl:px-23 rounded-[10px] w-full cursor-pointer active:translate-y-px bg-[#4539ca] mb-10"
                   >
-                    <IoCartOutline className="text-xl" />
-                    <div>Add to cart</div>
+                    <div className="text-white">Add to Cart</div>
                   </button>
-                </div>
-              </>
-            )}
+                </>
+              )}
+              {ProductInfo.map((item, idx) => (
+                <Features productInfo={item} id={id} key={idx} />
+              ))}
+            </div>
           </div>
+          <SectionInfo />
+          <EcoFriendlySection />
         </div>
+        <CollectionSection product={product} id={id} isLoading={isLoading} />
+
+        <Footer />
       </div>
-    </>
+    </div>
   );
 }

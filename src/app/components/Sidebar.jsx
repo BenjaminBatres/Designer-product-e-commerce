@@ -6,7 +6,6 @@ import { GiShoppingCart } from "react-icons/gi";
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const cartAmount = useSelector((state) => state.counter.items);
-
   const total = () => {
     let itemPrice = 0;
     cartAmount.forEach((item) => {
@@ -62,7 +61,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="bg-black text-white w-full text-md md:text-lg py-3 rounded-sm text-center active:translate-y-px cursor-pointer"
+              className="bg-[#4539ca] text-white w-full text-md md:text-lg py-3 rounded-sm text-center active:translate-y-px cursor-pointer"
             >
               Continue shopping
             </button>
@@ -76,7 +75,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               </ul>
               <Link
                 href={"/cart"}
-                className="bg-black text-white py-3 block text-center w-full font-semibold active:translate-y-px"
+                className="bg-[#4539ca] text-white py-3 block text-center w-full font-semibold active:translate-y-px"
               >
                 Check Out
               </Link>

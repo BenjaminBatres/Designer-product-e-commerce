@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function ProductCard({ item }) {
+export default function ProductCard({ item, id }) {
   const salePrice = item.inventory.slice(0, 1).map((pri) => pri.sale_price);
   const listPrice = item.inventory.slice(0, 1).map((pri) => pri.list_price);
   const imagesByColor = item.images.reduce((acc, img) => {
@@ -12,18 +12,19 @@ export default function ProductCard({ item }) {
   }, {});
   const colors = Object.keys(imagesByColor);
 
+
   const [colorPicker, setColorPicker] = useState(colors[0]);
   const [imageUrl, setImageUrl] = useState(
     imagesByColor[colors[0]][0].image_url
   );
 
-  const handleColorPicker = (color) => {
-    setColorPicker(color);
+  const handleColorPicker = (color, idx) => {
+    setColorPicker(colors[idx]);
     setImageUrl(imagesByColor[color][0].image_url);
   };
 
   return (
-    <div className="w-full sm:w-[48%] md:w-[32%] lg:w-[23%]">
+    <>
       <Link href={`/product/${item.product_id}`} className="w-full h-87 block">
         <Image
           width={500}
@@ -36,7 +37,7 @@ export default function ProductCard({ item }) {
 
       <div className="mt-3">
         <div className="text-sm capitalize text-gray-500">
-          {item.colors[colorPicker]}
+          {colorPicker}
         </div>
         <Link
           href={`/product/${item.product_id}`}
@@ -61,24 +62,24 @@ export default function ProductCard({ item }) {
           )}
         </div>
         <div className="flex mt-3 gap-2">
-          {colors.map((color) => (
+          {colors.map((color, idx) => (
             <div
               key={color}
               className={`${
-                colorPicker === color ? "border-2 border-gray-600" : ""
+                colorPicker === color && colors.length > 1 ? "border-2 border-gray-600" : ""
               } rounded-full h-6 w-6 flex items-center justify-center`}
             >
               <button
-                onClick={() => handleColorPicker(color)}
-                className={`h-4 w-4 rounded-full cursor-pointer ${
+                onClick={() => handleColorPicker(color, idx)}
+                className={`h-4 w-4 rounded-full ${
                   color === "white" ? "border-gray-500 border" : ""
-                }`}
+                } ${colors.length > 1 ? "cursor-pointer" : ''}`}
                 style={{ backgroundColor: color }}
               ></button>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -51,7 +51,9 @@ export default function Home() {
                 ) : (
                   <>
                     {product.slice(0, 8).map((item) => (
-                      <ProductCard key={item.product_id} item={item} />
+                      <div key={item.product_id} className="w-full sm:w-[48%] md:w-[32%] lg:w-[23%]">
+                        <ProductCard item={item} />
+                      </div>
                     ))}
                   </>
                 )}

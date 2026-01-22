@@ -5,41 +5,49 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Image from "next/image";
 
-export default function ImageThumbnails({
-  setActive,
-  images,
-  active,
-}) {
-  const imagesLength = images?.length;
+export default function ImageThumbnails({ setActive, images, active }) {
   return (
-    <div className="flex mt-4">
+    <div className="mt-4">
       <Swiper
-        slidesPerView={Math.min(imagesLength, 4)}
-        spaceBetween={10}
+        breakpoints={{
+          0: {
+            slidesPerView: images?.length > 3 ? 2.3 : 2,
+          },
+          768: {
+            slidesPerView: images?.length > 3 ? 3.3 : 2,
+          },
+        }}
+        spaceBetween={3}
         navigation
         modules={[Navigation]}
         className="select-none"
       >
         {images?.map((img, index) => (
-          <SwiperSlide key={index} className="!w-20 !h-20">
-            <button
-              onClick={() => setActive(index)}
-              className={`w-20 h-20 border rounded-md p-1 transition ${
+          <SwiperSlide key={index}>
+            {images?.length > 1 && (
+              <button
+                onClick={() => setActive(index)}
+                className={`
+              h-50 w-full rounded-xl border-4 cursor-pointer
+              transition-all duration-300 ease-out
+              ${
                 active === index
-                  ? "border-black ring-2 ring-black/30"
-                  : "border-gray-200 hover:border-gray-400"
-              }`}
-            >
-              <Image
-                src={img.image_url}
-                alt={img.color ?? "product image"}
-                width={80}
-                height={80}
-                placeholder="empty"
-                loading="lazy"
-                className="w-full h-full object-cover rounded"
-              />
-            </button>
+                  ? "border-[#4539ca]"
+                  : "border-transparent hover:border-[#4539ca]"
+              }
+            `}
+              >
+                <Image
+                  src={img.image_url}
+                  alt={img.color ?? "product image"}
+                  width={210}
+                  height={210}
+                  placeholder="empty"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </button>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>

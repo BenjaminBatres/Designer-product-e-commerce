@@ -9,7 +9,7 @@ export const counterSlice = createSlice({
     addToCart: (state, action) => {
       const item = action.payload;
       const existing = state.items.find(i => i.id === item.id);
-
+      // state.items.push(action.payload)
       if (existing) {
         existing.quantity += item.quantity;
       } else {
@@ -44,6 +44,15 @@ export const counterSlice = createSlice({
         existing.quantity = quantity;
       }
     },
+
+    updateCartSize: (state, action) => {
+      const {id, size} = action.payload;
+      const existing = state.items.find(i => i.id === id) ;
+        if (existing) {
+          existing.existing = size
+        }
+      },
+    
     removeFromCart: (state, action) => {
       state.items = state.items.filter(i => i.id !== action.payload);
     }

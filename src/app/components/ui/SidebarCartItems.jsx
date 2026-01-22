@@ -21,7 +21,7 @@ export default function SidebarCartItems({ product, setIsOpen }) {
     <div className="flex justify-between">
       <div className="flex">
         <figure className="p-1.5 w-25 h-25 sm:w-30 sm:h-33 bg-gray-100 rounded-sm">
-          <Link href={`/product/${product.id}`}>
+          <Link href={`/product/${product.productId}`}>
             <Image
               src={product.image}
               width={500}
@@ -33,10 +33,13 @@ export default function SidebarCartItems({ product, setIsOpen }) {
         </figure>
         <ul className="px-4">
           <li className="font-semibold text-sm sm:text-base">
-            <Link href={`/product/${product.id}`}>{product.name}</Link>
+            <Link href={`/product/${product.productId}`}>{product.name}</Link>
           </li>
-          <li className="font-semibold capitalize text-sm sm:text-base">
-            {product.color}
+          <li className="font-semibold text-sm sm:text-base">
+            <span className="capitalize">{product.color}</span>
+            {product.size && (
+              <span className="uppercase"> / {product.size}</span>
+            )}
           </li>
           <li className="flex gap-3 my-2">
             <button

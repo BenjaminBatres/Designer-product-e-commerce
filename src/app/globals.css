@@ -22,7 +22,7 @@ body {
   background-color: #ddd;
   position: relative;
   overflow: hidden;
-  height: 1em;
+  /* height: 1em; */
 }
 
 .skeleton-box::after {
@@ -49,7 +49,5 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: #000 !important;
-  width: 12px !important;
+  display: none !important;
 }
-

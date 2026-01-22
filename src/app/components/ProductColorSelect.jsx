@@ -1,20 +1,29 @@
 import React from "react";
+import { IoCheckmark } from "react-icons/io5";
 
-export default function ProductColorSelect({ color, handleColorPicker }) {
+export default function ProductColorSelect({
+  productColor,
+  color,
+  handleColorPicker,
+}) {
   return (
     <div
       key={color}
       className={`${
-        productColor === color ? "border-2 border-gray-600" : ""
-      } rounded-full h-6 w-6 flex items-center justify-center`}
+        productColor === color ? "border border-gray-600" : ""
+      } rounded-full h-10 w-10 flex items-center justify-center`}
     >
       <button
-        onClick={() => handleColorPicker(color, idx)}
-        className={`h-4 w-4 rounded-full cursor-pointer ${
+        onClick={() => handleColorPicker(color)}
+        className={`h-9 w-9 rounded-full cursor-pointer flex justify-center items-center ${
           color === "white" ? "border-gray-500 border" : ""
         }`}
         style={{ backgroundColor: color }}
-      ></button>
+      >
+        {productColor === color && (
+          <IoCheckmark className={`${color === "white" ? "text-black" : "text-white"} text-3xl`} />
+        )}
+      </button>
     </div>
   );
 }

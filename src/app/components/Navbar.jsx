@@ -18,13 +18,13 @@ export default function Navbar() {
         href={"/"}
         className="text-xl sm:text-3xl md:text-5xl font-semibold"
       >
-        Designer Products
+        StyleNest
       </Link>
       <div className="sm:flex gap-4 text-2xl hidden">
         <CiSearch className="cursor-not-allowed" />
         <CiUser className="cursor-not-allowed" />
         <Link href={"/cart"} className="relative">
-          <IoBagCheckOutline className="" />
+          <IoBagCheckOutline  />
           <div
             className={`absolute -top-[5px] -right-[5px] text-white text-xs px-[5px] py-[2px] rounded-[10px] ${
               totalQuantity <= 0 ? "" : "bg-black"

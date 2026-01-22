@@ -5,8 +5,8 @@ export default function SkeletonThumbnails({ thumbnails }) {
   return Array(thumbnails)
     .fill(0)
     .map((_, id) => (
-      <div className="w-[25%]" key={id}>
-        <SkeletonBox width={"100%"} height={85} />
+      <div className="w-[50%]" key={id}>
+        <SkeletonBox width={"100%"} height={150} borderRadius={8} />
       </div>
     ));
 }
