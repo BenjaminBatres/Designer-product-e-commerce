@@ -138,7 +138,7 @@ export default function page() {
               ) : (
                 <>
                   <figure className="w-full relative">
-                    {loading && <Spinner />}
+                    {loading && <Spinner position={"absolute"} />}
                     <Image
                       width={500}
                       height={500}

@@ -71,7 +71,7 @@ export default function page() {
               </div>
             )}
 
-            {loading && <Spinner />}
+            {loading && <Spinner position={"fixed"}/>}
           </div>
         </div>
       </div>
