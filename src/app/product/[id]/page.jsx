@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 // Components
@@ -34,7 +34,7 @@ export default function page() {
   const { id } = useParams();
   const [count, setCount] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +48,7 @@ export default function page() {
   const [productColors, setProductColors] = useState(
     product?.images[active].image_url,
   );
+  const [shoeSizeId, setShoeSizeId] = useState([]);
   const imagesByColor = product?.images.reduce((acc, img) => {
     if (!acc[img.color]) acc[img.color] = [];
     acc[img.color].push(img.image_url); // whole object
@@ -62,9 +63,9 @@ export default function page() {
   const dispatch = useDispatch();
 
   const handleSize = (size, id) => {
-    setSelectedSize(size)
-    setActiveSize(id)
-  }
+    setSelectedSize(size);
+    setActiveSize(id);
+  };
 
   const handleAddToCart = () => {
     setIsOpen(true);
@@ -77,8 +78,9 @@ export default function page() {
         price: parseInt(salePrice.join("")),
         image: productColors || product?.images[0].image_url,
         color: productColor,
-        size: selectedSize, 
-        description: product.description
+        size: selectedSize,
+        sizeId: shoeSizeId[activeSize],
+        description: product.description,
       }),
     );
   };
@@ -89,6 +91,7 @@ export default function page() {
         `https://www.greatfrontend.com/api/projects/challenges/e-commerce/products/${id}`,
       );
       const data = await res.json();
+      setProductColor(data.colors[0]);
       setProduct(data);
       setSalePrice(data.inventory.slice(0, 1).map((pri) => pri.sale_price));
       setListPrice(data.inventory.slice(0, 1).map((pri) => pri.list_price));
@@ -96,17 +99,21 @@ export default function page() {
         data.inventory.map((discount) => discount.discount_percentage),
       );
       setIsLoading(false);
-      setSelectedSize(data?.sizes[0])
+      setSelectedSize(data?.sizes[0]);
     }
     fetchProduct();
     setLoading(true);
   }, [active, id]);
 
   useEffect(() => {
-    if (product?.colors?.length && productColor === null) {
-      setProductColor(product.colors[0]);
-    }
-  }, [product, productColors]);
+    if (!product || !productColor) return;
+
+    const sku = product.inventory
+      .filter((item) => item.color === productColor)
+      .map((item) => item.sku);
+
+    setShoeSizeId(sku);
+  }, [productColor, product]);
 
   const handleColorPicker = (color) => {
     setProductColor(color);
@@ -114,9 +121,9 @@ export default function page() {
   };
   return (
     <div className="bg-[#f3f5f7] min-h-screen p-3">
-      <NavbarSecondary setIsSidebarOpen={setIsSidebarOpen}/>
-      <SidebarSecondary isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>
-      <Sidebar setIsOpen={setIsOpen} isOpen={isOpen}/>
+      <NavbarSecondary setIsSidebarOpen={setIsSidebarOpen} />
+      <SidebarSecondary isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <Sidebar setIsOpen={setIsOpen} isOpen={isOpen} />
       <div className="min-h-screen bg-white rounded-lg shadow-2xl/20 sm:shadow-2xl/40">
         <div className="px-4 py-15 lg:p-15 xl:p-25">
           <div className="flex flex-col lg:flex-row mb-30 gap-8">

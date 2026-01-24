@@ -26,9 +26,11 @@ export default function ProductDescription({
           </div>
           <div className="flex items-end gap-2 mb-2">
             <div className="text-3xl">${salePrice}</div>
+            {listPrice.join("") !== salePrice.join("") && (
             <div className="text-lg line-through text-gray-500">
               ${listPrice}
             </div>
+            )} 
           </div>
           {discountPercentage[0] && (
             <div className="bg-[#fefbec] border border-[#fcefbe] w-20 uppercase text-[#cd9969] rounded-full flex justify-center mb-2">

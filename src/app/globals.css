@@ -51,3 +51,33 @@ body {
 .swiper-button-prev {
   display: none !important;
 }
+
+.scroll-x::-webkit-scrollbar {
+  height: 6px; /* horizontal scrollbar height */
+}
+
+.scroll-x::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-x::-webkit-scrollbar-thumb {
+  background-color: #4539ca;
+  border-radius: 999px;
+}
+
+.scroll-x::-webkit-scrollbar-thumb:hover {
+  background-color: #352fb0;
+}
+
+
+
+/* Horizontal scrollbar:
+- overflow-x: auto
+- scrollbar height controls thickness
+- WebKit: ::-webkit-scrollbar
+- Firefox: scrollbar-width + scrollbar-color
+
+Smooth UX:
+- Avoid thick scrollbars
+- Use hover reveal
+- Add padding-bottom so scrollbar doesn’t overlap content */

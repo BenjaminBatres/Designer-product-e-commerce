@@ -8,11 +8,18 @@ export const counterSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const existing = state.items.find(i => i.id === item.id);
-      // state.items.push(action.payload)
-      if (existing) {
-        existing.quantity += item.quantity;
-      } else {
+      const existing = state.items.find(i => i.sizeId === item.sizeId)
+      const existingColor = state.items.find(i => i.color === item.color);
+      const existingSize = state.items.find(i => i.size === item.size);
+      if (existing && existingSize && existingColor) {
+        existing.quantity += item.quantity
+      }
+       else if (existingSize && existing) {
+        existingSize.quantity += item.quantity
+      } else if (existingColor && existing) {
+        existingColor.quantity += item.quantity
+      }
+        else {
         state.items.push(item);
       }
     },

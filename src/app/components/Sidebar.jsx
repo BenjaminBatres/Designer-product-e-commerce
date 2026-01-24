@@ -44,7 +44,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           ></i>
         </div>
 
-        <div className="p-4 space-y-8">
+        <div className={`p-4 space-y-8 overflow-y-auto ${cartAmount.length > 4 ? "h-170" : 'h-auto'}`}>
           {cartAmount?.map((product) => (
             <SidebarCartItems
               product={product}
