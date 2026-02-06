@@ -475,7 +475,7 @@ export default function Home() {
                       {activeTab === "Ratings" && (
                         <>
                           {filteredByRating.length === 0 ? (
-                            <div className=" xmd:absolute left-[50%] top-40 xmd:-translate-x-[50%] flex flex-col justify-center items-center">
+                            <div className=" sm:absolute left-[50%] top-40 sm:-translate-x-[50%] flex flex-col justify-center items-center mt-12 sm:mt-0">
                               <div className="border-b border-gray-200 rounded-full h-12 w-12 flex justify-center items-center">
                                 <RiTShirt2Line className="text-2xl text-[#4539ca]" />
                               </div>
