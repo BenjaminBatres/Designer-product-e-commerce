@@ -178,7 +178,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="w-full xmd:w-[80%]">
-                <div className="flex items-center justify-between xmd:justify-end xl:pr-6">
+                <div className="flex items-center justify-between xmd:justify-end xl:pr-6 mb-6">
                   <button
                     onClick={() => setIsOpen(true)}
                     className="flex items-center gap-1 border border-gray-200 shadow-sm px-4 py-2 mb-4 xmd:hidden cursor-pointer"
@@ -196,7 +196,7 @@ export default function Home() {
                 </div>
 
                 <div
-                  className={`flex flex-wrap relative ${filteredByRating.length === 0 && activeTab === "Ratings" ? "justify-center" : "justify-start"}`}
+                  className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative ${filteredByRating.length === 0 && activeTab === "Ratings" ? "justify-center" : "justify-start"}`}
                 >
                   {isLoading ? (
                     <SkeletonProductCard productCards={8} />
@@ -210,10 +210,7 @@ export default function Home() {
                                 .filter((item) => item.rating)
                                 .sort((a, b) => b.rating - a.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -221,10 +218,7 @@ export default function Home() {
                           ) : (
                             <>
                               {product.map((item) => (
-                                <div
-                                  key={item.product_id}
-                                  className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                >
+                                <div key={item.product_id}>
                                   <ProductCard item={item} />
                                 </div>
                               ))}
@@ -244,10 +238,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => b.rating - a.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -262,10 +253,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => a.rating - b.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -277,10 +265,7 @@ export default function Home() {
                                   (item) => item.collection.name === activeTab,
                                 )
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -300,10 +285,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => b.rating - a.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -318,10 +300,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => a.rating - b.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -333,10 +312,7 @@ export default function Home() {
                                   (item) => item.collection.name === activeTab,
                                 )
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -356,10 +332,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => b.rating - a.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -374,10 +347,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => a.rating - b.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -389,10 +359,7 @@ export default function Home() {
                                   (item) => item.category.name === activeTab,
                                 )
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -412,10 +379,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => b.rating - a.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -430,10 +394,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => a.rating - b.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -445,10 +406,7 @@ export default function Home() {
                                   (item) => item.category.name === activeTab,
                                 )
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -461,10 +419,7 @@ export default function Home() {
                           {product
                             .filter((item) => item.category.name === activeTab)
                             .map((item) => (
-                              <div
-                                key={item.product_id}
-                                className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                              >
+                              <div key={item.product_id}>
                                 <ProductCard item={item} />
                               </div>
                             ))}
@@ -482,10 +437,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => b.rating - a.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -500,10 +452,7 @@ export default function Home() {
                                 )
                                 .sort((a, b) => a.rating - b.rating)
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -515,10 +464,7 @@ export default function Home() {
                                   item.colors.includes(colorSelect),
                                 )
                                 .map((item) => (
-                                  <div
-                                    key={item.product_id}
-                                    className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                                  >
+                                  <div key={item.product_id}>
                                     <ProductCard item={item} />
                                   </div>
                                 ))}
@@ -543,10 +489,7 @@ export default function Home() {
                             </div>
                           ) : (
                             filteredByRating.map((item) => (
-                              <div
-                                key={item.product_id}
-                                className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                              >
+                              <div key={item.product_id}>
                                 <ProductCard item={item} />
                               </div>
                             ))
@@ -559,10 +502,7 @@ export default function Home() {
                             .filter((item) => item.rating)
                             .sort((a, b) => b.rating - a.rating)
                             .map((item) => (
-                              <div
-                                key={item.product_id}
-                                className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                              >
+                              <div key={item.product_id}>
                                 <ProductCard item={item} />
                               </div>
                             ))}
@@ -574,10 +514,7 @@ export default function Home() {
                             .filter((item) => item.rating)
                             .sort((a, b) => a.rating - b.rating)
                             .map((item) => (
-                              <div
-                                key={item.product_id}
-                                className="w-full sm:w-[calc(100%/2)] xl:w-[calc(100%/3)] sm:odd:pr-3 xl:odd:pr-6 mb-12 xl:pr-6"
-                              >
+                              <div key={item.product_id}>
                                 <ProductCard item={item} />
                               </div>
                             ))}

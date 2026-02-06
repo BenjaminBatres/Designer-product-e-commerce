@@ -26,7 +26,7 @@ export default function CustomSelect({
         className="border border-gray-200 shadow-sm rounded-sm py-2.5 px-3 flex items-center justify-between cursor-pointer"
         onClick={() => setOpen(!open)}
       >
-        <span className="text-sm font-semibold">{select}</span>
+        <span className="text-xs sm:text-sm font-semibold">{select}</span>
         <IoIosArrowDown />
       </div>
       {open && (
