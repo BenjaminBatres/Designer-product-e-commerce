@@ -12,10 +12,9 @@ export default function ProductCard({ item, id }) {
   }, {});
   const colors = Object.keys(imagesByColor);
 
-
   const [colorPicker, setColorPicker] = useState(colors[0]);
   const [imageUrl, setImageUrl] = useState(
-    imagesByColor[colors[0]][0].image_url
+    imagesByColor[colors[0]][0].image_url,
   );
 
   const handleColorPicker = (color, idx) => {
@@ -36,9 +35,7 @@ export default function ProductCard({ item, id }) {
       </Link>
 
       <div className="mt-3">
-        <div className="text-sm capitalize text-gray-500">
-          {colorPicker}
-        </div>
+        <div className="text-sm capitalize text-gray-500">{colorPicker}</div>
         <Link
           href={`/product/${item.product_id}`}
           className="font-semibold text-lg"
@@ -66,14 +63,16 @@ export default function ProductCard({ item, id }) {
             <div
               key={color}
               className={`${
-                colorPicker === color && colors.length > 1 ? "border-2 border-gray-600" : ""
+                colorPicker === color && colors.length > 1
+                  ? "border-2 border-gray-600"
+                  : ""
               } rounded-full h-6 w-6 flex items-center justify-center`}
             >
               <button
                 onClick={() => handleColorPicker(color, idx)}
                 className={`h-4 w-4 rounded-full ${
                   color === "white" ? "border-gray-500 border" : ""
-                } ${colors.length > 1 ? "cursor-pointer" : ''}`}
+                } ${colors.length > 1 ? "cursor-pointer" : ""}`}
                 style={{ backgroundColor: color }}
               ></button>
             </div>

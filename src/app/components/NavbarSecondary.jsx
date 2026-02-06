@@ -10,7 +10,7 @@ export default function NavbarSecondary({setIsSidebarOpen}) {
     0,
   );
   return (
-    <div className="h-25 flex justify-between items-center sm:px-5 md:px-15 xl:px-25">
+    <div className="h-25 flex justify-between items-center px-5 md:px-15 xl:px-25">
       <div className="flex gap-35 items-center">
         <Link href={"/"} className="text-2xl font-semibold">
           StyleNest

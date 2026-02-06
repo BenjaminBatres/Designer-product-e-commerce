@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import SkeletonProductCard from "./SkeletonProductCard";
 
-export default function CollectionSection({ id, isLoading }) {
+export default function CollectionSection({ id, isLoading, product }) {
   const [products, setProducts] = useState([]);
+  const productCollections = product?.collection?.collection_id
 
-
+  // console.log(products.filter((product)=> product.collection.collection_id === 'urban').map((product) => product.product_id) )
+  // console.log(product.collection.collection_id)
   useEffect(() => {
     async function fetchProduct() {
       const res = await fetch(
@@ -14,7 +16,6 @@ export default function CollectionSection({ id, isLoading }) {
       );
       const { data } = await res.json();
       setProducts(data);
-      // setIsLoading(false);
     }
     fetchProduct();
   }, []);
@@ -22,21 +23,22 @@ export default function CollectionSection({ id, isLoading }) {
   return (
     <div className="py-15 lg:py-30 px-4 lg:px-20">
       <div className="text-3xl font-semibold">In this collection</div>
-      <div className="flex justify-between flex-wrap">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-15">
         {isLoading ? 
         <SkeletonProductCard productCards={4}/>
         : (
           < >
         {products
-          .filter((product) => product.rating >= 4 && product.product_id !== id)
-          .slice(0, 4)
-          .map((product) => (
-            <div key={product.product_id} className="w-full sm:w-[49%] lg:w-[23%] mt-15">
-              <ProductCard item={product}  id={id}/>
+          ?.filter((product) => product?.collection?.collection_id === productCollections )
+          ?.slice(0, 4)
+          ?.map((product) => (
+            <div key={product.product_id} className="">
+              <ProductCard item={product} id={id}/>
             </div>
           ))}
           </>
         )}
+
       </div>
     </div>
   );
