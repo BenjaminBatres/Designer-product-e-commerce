@@ -10,7 +10,7 @@ export default function FilterColors({
   isCollapsed,
   idx,
 }) {
-  // const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isOpen, setIsOpen] = useState(true);
   const allProductColors = products.flatMap((product) => product.colors);
   const sortedProductColors = [];
   for (const colors of allProductColors) {
@@ -21,17 +21,36 @@ export default function FilterColors({
 
   return (
     <div className="border-b border-gray-400 overflow-hidden">
-      <div
-      style={{marginBottom: isCollapsed === idx && '16px'}}
-        className={`flex items-center justify-between transition-all duration-300`}
-        onClick={() => setIsCollapsed(idx)}
-      >
-        <div className="font-semibold text-lg">Colors</div>
-        {idx === isCollapsed ? <FaPlus className="cursor-pointer"/> : <FaMinus className="cursor-pointer"/>}
-      </div>
+      {idx ? (
+        <div
+          style={{ marginBottom: isCollapsed === idx && "16px" }}
+          className={`flex items-center justify-between transition-all duration-300`}
+          onClick={() => setIsCollapsed(idx)}
+        >
+          <div className="font-semibold text-lg">Colors</div>
+          {idx === isCollapsed ? (
+            <FaPlus className="cursor-pointer" />
+          ) : (
+            <FaMinus className="cursor-pointer" />
+          )}
+        </div>
+      ) : (
+        <div
+          style={{ marginBottom: isOpen && "16px" }}
+          className={`flex items-center justify-between transition-all duration-300`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <div className="font-semibold text-lg">Colors</div>
+          {isOpen ? (
+            <FaPlus className="cursor-pointer" />
+          ) : (
+            <FaMinus className="cursor-pointer" />
+          )}
+        </div>
+      )}
       <ul
         className="flex flex-wrap xmd:max-w-60 gap-4 mb-6 overflow-hidden transition-height duration-300"
-        style={{ height: idx === isCollapsed ? height : 0 }}
+        style={{ height: (idx ? idx === isCollapsed : isOpen) ? height : 0 }}
       >
         {sortedProductColors.map((colors, id) => (
           <li

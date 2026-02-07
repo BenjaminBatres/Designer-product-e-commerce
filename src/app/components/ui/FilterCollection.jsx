@@ -8,21 +8,41 @@ export default function FilterCollection({
   handleActiveSelection,
   setIsCollapsed,
   isCollapsed,
-  idx
+  idx,
 }) {
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div className="border-b border-gray-400 overflow-hidden">
-      <div
-        style={{marginBottom: isCollapsed === idx && '16px'}}
-        className={`flex items-center justify-between transition-all duration-300`}
-        onClick={() => setIsCollapsed(idx)}
-      >
-        <div className="font-semibold text-lg">{title}</div>
-        {idx === isCollapsed ? <FaPlus className="cursor-pointer" /> : <FaMinus className="cursor-pointer" />}
-      </div>
+      {idx ? (
+        <div
+          style={{ marginBottom: isCollapsed === idx && "16px" }}
+          className={`flex items-center justify-between transition-all duration-300`}
+          onClick={() => setIsCollapsed(idx)}
+        >
+          <div className="font-semibold text-lg">{title}</div>
+          {idx === isCollapsed ? (
+            <FaPlus className="cursor-pointer" />
+          ) : (
+            <FaMinus className="cursor-pointer" />
+          )}
+        </div>
+      ) : (
+        <div
+          style={{ marginBottom: isOpen && "16px" }}
+          className={`flex items-center justify-between transition-all duration-300`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <div className="font-semibold text-lg">{title}</div>
+          {isOpen ? (
+            <FaPlus className="cursor-pointer" />
+          ) : (
+            <FaMinus className="cursor-pointer" />
+          )}
+        </div>
+      )}
       <ul
         className="space-y-3 mb-6 overflow-hidden transition-height duration-300"
-        style={{ height: idx === isCollapsed ? 100 : 0 }}
+        style={{ height: (idx ? idx === isCollapsed : isOpen) ? 100 : 0 }}
       >
         {options.map((options, id) => (
           <li key={id}>

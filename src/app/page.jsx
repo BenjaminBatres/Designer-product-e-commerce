@@ -172,6 +172,7 @@ export default function Home() {
                     products={product}
                     handleColorSelection={handleColorSelection}
                     colorActiveOption={colorActiveOption}
+                    height={70}
                   />
 
                   <FilterRating handleRatingSelection={handleRatingSelection} />
